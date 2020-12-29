@@ -1,3 +1,5 @@
+import { ApolloProvider } from '@apollo/client'
+import '../styles/globals.css'
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 export const client = new ApolloClient({
@@ -7,3 +9,9 @@ export const client = new ApolloClient({
     "x-hasura-admin-secret": "myadminsecretkey",
   },
 });
+
+function MyApp({ Component, pageProps }) {
+  return <ApolloProvider client={client}><Component {...pageProps} /></ApolloProvider>
+}
+
+export default MyApp

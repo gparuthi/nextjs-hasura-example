@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { client } from '../lib/apolloClient';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from "next/router"
 
@@ -18,7 +17,8 @@ mutation AddTodo($value: String = "") {
     id
     value
   }
-}`
+}
+`
 
 const DelTodoQuery = gql`
 mutation DelTodo($id: uuid!) {
@@ -33,8 +33,8 @@ mutation DelTodo($id: uuid!) {
 export default function Home() {
   const router = useRouter()
   const { loading, error, data, refetch } = useQuery(Query);
-  const [updateTodo] = useMutation(AddTodoQuery, { onCompleted: ()=>refetch() });
-  const [delTodo] = useMutation(DelTodoQuery, { onCompleted: ()=>refetch() });
+  const [updateTodo] = useMutation(AddTodoQuery, { onCompleted: () => refetch() });
+  const [delTodo] = useMutation(DelTodoQuery, { onCompleted: () => refetch() });
 
 
   let todoInput
@@ -55,34 +55,19 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <div className="box"></div>
+      <div className={styles.box}></div>
       <h1>TODOS</h1>
       <hr />
       {data.todos.map(t =>
-        <div key={t.id} className="todo">
+        <div key={t.id} className={styles.todo}>
           <div>{t.value}</div>
           <button onClick={() => onDel(t.id)}>x</button>
         </div>)
       }
       <hr />
       <input type='text' placeholder='Enter TODO'
-        ref={el => todoInput = el} /> <button onClick={onAdd}>+</button>
-      <style jsx>
-        {`
-        .todo{
-          margin: 10px;
-    border-style: dashed;
-    padding: 10px;
-    width: 200px;
-    display: flex;
-    justify-content: space-between;
-          
-        }
-          .box {
-            margin: 20px
-          }
-        `}
-      </style>
+        ref={el => todoInput = el} /> 
+      <button onClick={onAdd}>+</button>
     </div>
   )
 }
