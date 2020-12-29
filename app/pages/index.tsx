@@ -1,7 +1,6 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { useRouter } from "next/router"
+import { useRouter } from "next/router";
+import styles from '../styles/Home.module.css';
 
 const Query = gql`
 query Todos {
